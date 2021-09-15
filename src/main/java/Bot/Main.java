@@ -29,13 +29,20 @@ public class Main {
                     GatewayIntent.GUILD_MESSAGES
             ).setMemberCachePolicy(MemberCachePolicy.OWNER);
 
+            jdaBuilder.addEventListeners(new Listener());
+
             //Start the bot
             try {
                 JDA jda = jdaBuilder.build();
                 jda.awaitReady();
+
+                jda.upsertCommand("hello","says hello to the bot.").queue();
+                jda.upsertCommand("ping","Calculate the ping of the bot.").queue();
+
             } catch (LoginException | InterruptedException e) {
                 e.printStackTrace();
             }
+
 
         } catch (FileNotFoundException e) {
             System.out.println("Missing the Token, stopping program.");
