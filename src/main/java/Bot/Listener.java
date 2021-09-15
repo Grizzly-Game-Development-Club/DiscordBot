@@ -20,9 +20,14 @@ public class Listener extends ListenerAdapter {
                     //Format the command
                     String commandName = e.getMessage().getContentRaw().toLowerCase().split("\\s+")[0];
                     commandName = commandName.substring(commandSign.length());
+                    System.out.println(commandName);
                     switch (commandName) {
-                        case "hello" -> new HelloWorld(e.getTextChannel());
-                        case "ping" -> new Ping(e.getTextChannel());
+                        case "hello" -> new HelloWorld(e);
+                        case "ping" -> new Ping(e);
+                        case "getevents" -> new GetEvents(e);
+                        case "profile" -> new GetProfile(e);
+                        case "setname" -> new SetMemberName(e);
+                        case "setemail" -> new SetSchoolEmail(e);
                     }
                 }
             }

@@ -1,26 +1,23 @@
 package Bot.Commands;
 
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class Ping extends Command {
 
     long time;
 
-    public Ping(TextChannel channel) {
-        super(channel);
-
-        time = System.currentTimeMillis();
+    public Ping(MessageReceivedEvent e) {
+        super(e);
     }
 
     public Ping(SlashCommandEvent slashCommand) {
         super(slashCommand);
-
-        time = System.currentTimeMillis();
     }
 
     @Override
     public void run() {
+        time = System.currentTimeMillis();
         sendMessage("Pong!");
     }
 
