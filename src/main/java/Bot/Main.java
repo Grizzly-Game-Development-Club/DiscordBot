@@ -6,26 +6,39 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Main {
 
-    final static String TOKEN = "Njc3NjcxNTU0ODA0NDgyMDU5.XkXo0Q.yIiUW1whvvV4nSq0TxEoj4In-bM";
+    static String token;
 
     public static void main(String[] args) {
 
-        JDABuilder jdaBuilder = JDABuilder.create(TOKEN,
-                GatewayIntent.GUILD_MEMBERS,
-                GatewayIntent.GUILD_PRESENCES,
-                GatewayIntent.GUILD_MESSAGES
-        ).setMemberCachePolicy(MemberCachePolicy.OWNER);
-
-        JDA jda;
-
         try {
-            jda = jdaBuilder.build();
-            jda.awaitReady();
-        } catch (LoginException | InterruptedException e) {
-            e.printStackTrace();
+            //Personal Location for the Token
+            File tokenLocation = new File("GGDCDiscordBot.token");
+            Scanner tokenIn = new Scanner(tokenLocation);
+            token = tokenIn.nextLine();
+
+            //Setup JDA, with GatewayIntents
+            JDABuilder jdaBuilder = JDABuilder.create(token,
+                    GatewayIntent.GUILD_MEMBERS,
+                    GatewayIntent.GUILD_PRESENCES,
+                    GatewayIntent.GUILD_MESSAGES
+            ).setMemberCachePolicy(MemberCachePolicy.OWNER);
+
+            //Start the bot
+            try {
+                JDA jda = jdaBuilder.build();
+                jda.awaitReady();
+            } catch (LoginException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Missing the Token, stopping program.");
         }
 
     }
